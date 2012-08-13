@@ -53,7 +53,7 @@ namespace ItalicComments
 
             view.GotAggregateFocus += FirstGotFocus;
         }
- 
+
         void FirstGotFocus(object sender, EventArgs e)
         {
             ((ITextView)sender).GotAggregateFocus -= FirstGotFocus;
@@ -97,21 +97,21 @@ namespace ItalicComments
                     string name = classification.Classification.ToLowerInvariant();
                     if (CommentTypes.Contains(name) || DocTagTypes.Contains(name))
                         continue;
-                    
+
                     if (name.Contains("comment"))
                     {
                         Italicize(classification);
                     }
                     else if (name.Contains("doc tag"))
                     {
-                        Fade(classification);   
+                        Fade(classification);
                     }
                 }
             }
             finally
             {
                 inUpdate = false;
-            } 
+            }
         }
 
         void Italicize(IClassificationType classification)
@@ -126,7 +126,7 @@ namespace ItalicComments
 
             // Add italic and (possibly) remove bold, and change to a font that has good looking
             // italics (i.e. *not* Consolas)
-            var newTypeface = new Typeface(new FontFamily("Lucida Sans"), FontStyles.Italic, FontWeights.Normal, typeface.Stretch);
+            var newTypeface = new Typeface(properties.Typeface.FontFamily, FontStyles.Italic, FontWeights.Normal, typeface.Stretch);
             properties = properties.SetTypeface(newTypeface);
 
             // Also, make the font size a little bit smaller than the normal text size
@@ -142,7 +142,7 @@ namespace ItalicComments
             var properties = formatMap.GetTextProperties(classification);
 
             var brush = properties.ForegroundBrush as SolidColorBrush;
-           
+
             // If the opacity is already not 1.0, skip this
             if (brush == null || brush.Opacity != 1.0)
                 return;
